@@ -1,0 +1,8 @@
+{
+    "presets": [
+        "@babel/preset-env", // 不配置该项则不会把es6语法转化成es5语法
+        "@babel/preset-react",
+        "@babel/preset-typescript"
+    ]
+    // "plugins": ["@babel/plugin-syntax-dynamic-import"]
+}
