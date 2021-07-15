@@ -1,16 +1,20 @@
-::placeholder {
-    color: red;
-  }
+
 .page-index {
     display: flex;
     transition :transform 1s;
+    background-color: red;
+    
+    background-image: url('@assets/images/logo.png')
+}
+
+h1 {
     background: linear-gradient(
         to bottom,
         #ffe500 0%,
         #ffe500 50%,
         #121 50%,
         #121 100%
-    )
+    );
 }
 
 h1::before,
