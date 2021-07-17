@@ -131,7 +131,7 @@ module.exports = {
         }),
         new CleanWebpackPlugin(),
         new WebpackBar({
-            name: 'Link Startou!!!',
+            name: '开始你的表演！！！',
             color: '#52c41a',
         }),
         new ForkTsCheckerWebpackPlugin({

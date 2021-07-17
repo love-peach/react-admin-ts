@@ -14,7 +14,7 @@ export function mergeStyle(style1: CSSProperties, style2?: CSSProperties): CSSPr
         array.push(style2);
     }
     const resultStyle = {};
-    array.map((style) => {
+    array.map(style => {
         Object.assign(resultStyle, style);
     });
 

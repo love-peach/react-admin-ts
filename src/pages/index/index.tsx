@@ -23,7 +23,7 @@ export default class extends BaseComponent<PageProps, PageState> {
         return (
             <div>
                 <div className="page-index">
-                    <h1>1112231141</h1>
+                    <h1>111223114111</h1>
                     <input placeholder="1212" type="text" />
                     <img src={Logo} alt="" />
                 </div>

@@ -5,10 +5,7 @@ import { renderRoutes } from 'react-router-config';
 
 import routes from '@routers';
 
-ReactDOM.render(
-    <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>,
-    document.getElementById('root')
-);
+ReactDOM.render(<BrowserRouter>{renderRoutes(routes)}</BrowserRouter>, document.getElementById('root'));
 
 // import App from './pages/index';
 
