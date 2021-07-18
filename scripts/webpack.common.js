@@ -1,6 +1,7 @@
 const path = require('path');
-const WebpackBar = require('webpackbar');
 
+const webpack = require('webpack');
+const WebpackBar = require('webpackbar');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -9,6 +10,19 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 const { PROJECT_PATH } = require('./constant');
 const { isDevelopment, isProduction } = require('./env');
+
+// import path from 'path';
+
+// import webpack from 'webpack';
+// import WebpackBar from 'webpackbar';
+// import HtmlWebpackPlugin from 'html-webpack-plugin';
+// import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+// import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+// import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+// import CopyPlugin from 'copy-webpack-plugin';
+
+// import { PROJECT_PATH } from './constant.js';
+// import { isDevelopment, isProduction } from './env.js';
 
 const getCssLoaders = () => {
     const cssLoaders = [
@@ -47,28 +61,22 @@ const getCssLoaders = () => {
     return cssLoaders;
 };
 
-module.exports = {
+const commonConfig = {
+    cache: true,
+    context: PROJECT_PATH,
     entry: {
         app: path.resolve(PROJECT_PATH, './src/index.tsx'),
     },
-    cache: {
-        type: 'filesystem',
-        buildDependencies: {
-            config: [__filename],
-        },
-    },
+    // cache: {
+    //     type: 'filesystem',
+    //     buildDependencies: {
+    //         config: [__filename],
+    //     },
+    // },
     resolve: {
         extensions: ['.tsx', '.ts', '.js', '.json'],
         alias: {
-            '@src': path.resolve(PROJECT_PATH, './src'),
-            '@assets': path.resolve(PROJECT_PATH, './src/assets'),
-            '@components': path.resolve(PROJECT_PATH, './src/components'),
-            '@constants': path.resolve(PROJECT_PATH, './src/constants'),
-            '@interfaces': path.resolve(PROJECT_PATH, './src/interfaces'),
-            '@models': path.resolve(PROJECT_PATH, './src/models'),
-            '@pages': path.resolve(PROJECT_PATH, './src/pages'),
-            '@routers': path.resolve(PROJECT_PATH, './src/routers'),
-            '@utils': path.resolve(PROJECT_PATH, './src/utils'),
+            '@': path.resolve(PROJECT_PATH, './src'),
         },
     },
     module: {
@@ -125,6 +133,9 @@ module.exports = {
         ],
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env': process.env.NODE_ENV,
+        }),
         new HtmlWebpackPlugin({
             template: path.resolve(PROJECT_PATH, './public/index.html'),
             favicon: path.resolve(PROJECT_PATH, './public/favicon.ico'),
@@ -156,3 +167,5 @@ module.exports = {
         }),
     ],
 };
+
+module.exports = commonConfig;

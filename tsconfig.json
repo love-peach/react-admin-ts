@@ -19,60 +19,12 @@
         "baseUrl": "./", // 根路径
         "paths": {
             // 路径映射，与 baseUrl 关联
-            "@src": [
+            "@": [
                 "src"
             ],
-            "@src/*": [
+            "@/*": [
                 "src/*"
             ],
-            "@assets": [
-                "src/assets"
-            ],
-            "@assets/*": [
-                "src/assets/*"
-            ],
-            "@components": [
-                "src/components"
-            ],
-            "@components/*": [
-                "src/components/*"
-            ],
-            "@constants": [
-                "src/constants"
-            ],
-            "@constants/*": [
-                "src/constants/*"
-            ],
-            "@interfaces": [
-                "src/interfaces"
-            ],
-            "@interfaces/*": [
-                "src/interfaces/*"
-            ],
-            "@models": [
-                "src/models"
-            ],
-            "@models/*": [
-                "src/models/*"
-            ],
-            "@pages": [
-                "src/models"
-            ],
-            "@pages/*": [
-                "src/models/*"
-            ],
-            "@routers": [
-                "src/routers"
-            ],
-            "@routers/*": [
-                "src/routers/*"
-            ],
-            "@utils": [
-                "src/utils"
-            ],
-            "@utils/*": [
-                "src/utils/*"
-            ]
         },
         // 实验性选项
         "experimentalDecorators": true, // 启用实验性的ES装饰器

@@ -1,9 +1,11 @@
 import './index.scss';
 
 import React from 'react';
-import BaseComponent from '@components/base/index';
+import BaseComponent from '@/components/base/index';
 
-import Logo from '@assets/images/logo.png';
+import http from '@/utils/http';
+
+import Logo from '@/assets/images/logo.png';
 
 interface PageProps {}
 interface PageState {}
@@ -11,12 +13,16 @@ interface PageState {}
 export default class extends BaseComponent<PageProps, PageState> {
     constructor(props: PageProps) {
         super(props);
-        console.log(this, 'this');
     }
 
-    handleJump = () => {
-        console.log(this, '223');
-        console.log(this.queryParams, '223');
+    handleJump = (): void => {
+        http('get', '/admin/home/leftView.mvc', { channel: '1', biz: '1' })
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err, '2222');
+            });
     };
 
     render(): JSX.Element {
@@ -27,7 +33,7 @@ export default class extends BaseComponent<PageProps, PageState> {
                     <input placeholder="1212" type="text" />
                     <img src={Logo} alt="" />
                 </div>
-                <span onClick={this.handleJump.bind(this)}>login</span>
+                <span onClick={this.handleJump.bind(this)}>333</span>
             </div>
         );
     }

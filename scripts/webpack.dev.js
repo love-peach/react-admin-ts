@@ -5,7 +5,15 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
 const { PROJECT_PATH, SERVER_HOST, SERVER_PORT } = require('./constant');
 
-module.exports = merge(common, {
+// import path from 'path';
+// import webpack from 'webpack';
+
+// import { merge } from 'webpack-merge';
+
+// import common from './webpack.common.js';
+// import { PROJECT_PATH, SERVER_HOST, SERVER_PORT } from './constant.js';
+
+const devConfig = merge(common, {
     mode: 'development',
     devtool: 'cheap-module-source-map',
     target: 'web',
@@ -15,6 +23,7 @@ module.exports = merge(common, {
         publicPath: '/',
     },
     devServer: {
+        disableHostCheck: true,
         host: SERVER_HOST,
         port: SERVER_PORT,
         stats: 'errors-only',
@@ -38,3 +47,5 @@ module.exports = merge(common, {
         },
     },
 });
+
+module.exports = devConfig;

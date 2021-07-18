@@ -8,7 +8,17 @@ const TerserPlugin = require('terser-webpack-plugin');
 const common = require('./webpack.common');
 const { PROJECT_PATH } = require('./constant');
 
-module.exports = merge(common, {
+// import path from 'path';
+// import { merge } from 'webpack-merge';
+
+// import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+// import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+// import TerserPlugin from 'terser-webpack-plugin';
+
+// import common from './webpack.common.js';
+// import { PROJECT_PATH } from './constant.js';
+
+const prodConfig = merge(common, {
     mode: 'production',
     devtool: false,
     target: 'browserslist',
@@ -41,3 +51,5 @@ module.exports = merge(common, {
         },
     },
 });
+
+module.exports = prodConfig;

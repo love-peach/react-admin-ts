@@ -2,7 +2,7 @@ import * as React from 'react';
 import { match, RouteProps, withRouter } from 'react-router-dom';
 import { History, Location } from 'history';
 import classnames from 'classnames';
-import { queryToJson } from '@utils/url';
+import { queryToJson } from '@/utils/url';
 
 interface ClassDictionary {
     [id: string]: boolean | undefined | null;
