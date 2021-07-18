@@ -7,6 +7,8 @@ import http from '@/utils/http';
 
 import Logo from '@/assets/images/logo.png';
 
+import { Button } from 'antd';
+
 interface PageProps {}
 interface PageState {}
 
@@ -22,6 +24,7 @@ export default class extends BaseComponent<PageProps, PageState> {
             })
             .catch(err => {
                 console.log(err, '2222');
+                this.props.history?.push('/login');
             });
     };
 
@@ -33,7 +36,9 @@ export default class extends BaseComponent<PageProps, PageState> {
                     <input placeholder="1212" type="text" />
                     <img src={Logo} alt="" />
                 </div>
-                <span onClick={this.handleJump.bind(this)}>333</span>
+                <Button type="primary" onClick={this.handleJump.bind(this)}>
+                    333
+                </Button>
             </div>
         );
     }
