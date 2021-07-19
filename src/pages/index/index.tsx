@@ -1,7 +1,7 @@
 import './index.scss';
 
 import React from 'react';
-import BaseComponent from '@/components/base/index';
+import { BaseComponent } from '@/components/base/index';
 
 import http from '@/utils/http';
 

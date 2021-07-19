@@ -4,6 +4,14 @@ import { isDevelopment } from '../../scripts/env';
 
 import config from '@/config/constants';
 
+export interface BaseResponse<T> {
+    code: number | string;
+    message: string;
+    data: T;
+    success?: boolean;
+    msg?: string;
+}
+
 axios.defaults.withCredentials = true;
 axios.defaults.timeout = 100000;
 axios.defaults.baseURL = config.api;
@@ -33,7 +41,7 @@ axios.interceptors.response.use(
         return response;
     },
     error => {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line
         console.log('请求出错：', error);
     },
 );
@@ -44,7 +52,7 @@ axios.interceptors.response.use(
  * @param params  请求参数
  * @returns {Promise}
  */
-export function get(url: string, params = {}): Promise<boolean> {
+export function get<T = {}>(url: string, params = {}): Promise<BaseResponse<T>> {
     return new Promise((resolve, reject) => {
         axios
             .get(url, {
@@ -54,7 +62,6 @@ export function get(url: string, params = {}): Promise<boolean> {
                 resolve(response.data);
             })
             .catch(error => {
-                console.log(error, '1111');
                 reject(error);
             });
     });
@@ -67,7 +74,7 @@ export function get(url: string, params = {}): Promise<boolean> {
  * @returns {Promise}
  */
 
-export function post(url: string, data = {}): Promise<boolean> {
+export function post<T = {}>(url: string, data = {}): Promise<BaseResponse<T>> {
     return new Promise((resolve, reject) => {
         axios.post(url, data).then(
             response => {
@@ -87,7 +94,7 @@ export function post(url: string, data = {}): Promise<boolean> {
  * @param data
  * @returns {Promise}
  */
-export function patch(url: string, data = {}): Promise<boolean> {
+export function patch<T = {}>(url: string, data = {}): Promise<BaseResponse<T>> {
     return new Promise((resolve, reject) => {
         axios.patch(url, data).then(
             response => {
@@ -108,7 +115,7 @@ export function patch(url: string, data = {}): Promise<boolean> {
  * @returns {Promise}
  */
 
-export function put(url: string, data = {}): Promise<boolean> {
+export function put<T = {}>(url: string, data = {}): Promise<BaseResponse<T>> {
     return new Promise((resolve, reject) => {
         axios.put(url, data).then(
             response => {
@@ -128,13 +135,13 @@ export function put(url: string, data = {}): Promise<boolean> {
  * @param url
  * @param param
  */
-export default function (fecth: Method, url: string, param = {}): Promise<boolean> {
+export default function <T = {}>(fecth: Method, url: string, param = {}): Promise<BaseResponse<T>> {
     const _data = '';
     return new Promise((resolve, reject) => {
         switch (fecth) {
             case 'get':
             case 'GET':
-                get(url, param)
+                get<T>(url, param)
                     .then(function (response) {
                         resolve(response);
                     })
@@ -144,7 +151,7 @@ export default function (fecth: Method, url: string, param = {}): Promise<boolea
                 break;
             case 'post':
             case 'POST':
-                post(url, param)
+                post<T>(url, param)
                     .then(function (response) {
                         resolve(response);
                     })

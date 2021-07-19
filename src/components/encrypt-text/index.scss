@@ -1,0 +1,17 @@
+.comp-decrypt,
+.comp-encrypt {
+    padding-right: 20px;
+    background: url('//img10.360buyimg.com/imagetools/jfs/t1/132669/34/15396/1002/5faa48f6Ebf04349b/ce4a9821ed56b5d8.png')
+        right center no-repeat;
+    background-size: 16px 16px;
+    cursor: pointer;
+    &:hover {
+        background-image: url('//img10.360buyimg.com/imagetools/jfs/t1/124014/25/18210/1021/5faa48f6E1d8e8744/8fe043abbae2f719.png');
+    }
+}
+.comp-encrypt {
+    background-image: url('//img14.360buyimg.com/imagetools/jfs/t1/135745/31/15575/810/5faa48f6Ea5ee655f/93211a9081e9a12a.png');
+    &:hover {
+        background-image: url('//img13.360buyimg.com/imagetools/jfs/t1/137834/18/13909/812/5faa48f6E3aea61a0/95d9ca7a7525d126.png');
+    }
+}

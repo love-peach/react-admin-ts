@@ -23,6 +23,15 @@
 /* eslint-disable no-alert, no-console */  --禁用某些规则
 // eslint-disable-line     --当前行上禁用规则
 // eslint-disable-next-line --下一行上禁用规则
+
+单行忽略
+// @ts-ignore
+
+忽略全文
+// @ts-nocheck
+
+取消忽略全文
+// @ts-check
 ```
 
 #### 配置文件优先级

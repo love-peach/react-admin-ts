@@ -1,0 +1,113 @@
+.page-list-wrap {
+    height: 100%;
+    .jd-pagination-custom {
+        margin-top: 24px;
+    }
+    .condition {
+        padding: 20px 32px 0;
+        margin-bottom: 20px;
+        background-color: #fff;
+        border-radius: 4px;
+        box-shadow: -10px 9px 21px 0px rgba(128, 152, 213, 0.07);
+        .jd-input,
+        .jd-select,
+        .jd-slider,
+        .jd-cascader,
+        .jd-react-select,
+        .ant-slider {
+            width: 264px;
+        }
+        .jd-date-editor .jd-date-editor-daterange.jd-input {
+            width: 264px;
+        }
+    }
+    .action-bar {
+        background-color: #fff;
+        &__inner {
+            padding: 20px 20px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        &__content {
+            width: 100px;
+        }
+    }
+    .table-pagination {
+        padding: 20px 20px 0;
+        background-color: #fff;
+        border-radius: 4px;
+    }
+    .jd-table {
+        font-size: 14px;
+        color: #666;
+        th {
+            height: 40px;
+        }
+        .cell {
+            line-height: 20px;
+        }
+        .jd-checkbox-inner:after {
+            border-color: #f6f9fc;
+        }
+        .jd-checkbox-input.is-disabled .jd-checkbox-inner:after {
+            content: none;
+        }
+        .jd-table-empty-block {
+            min-height: 400px;
+            background-color: #fff;
+        }
+        .jd-table-column-box-selection {
+            .cell {
+                text-overflow: clip;
+            }
+        }
+        .table-operate {
+            &.is-inline {
+                .cell {
+                    flex-direction: row;
+                    >span {
+                        padding: 0 5px;
+                        line-height: 20px;
+                        &:not(:last-child) {
+                            border-right: 1px solid #eee;
+                        }
+                    }
+                }
+            }
+            .cell {
+                display: flex;
+                flex-direction: column;
+                >span {
+                    font-size: 13px;
+                    color: #336bfe;
+                    line-height: 22px;
+                    cursor: pointer;
+                    &:hover {
+                        color: rgba(51, 107, 254, 0.7);
+                    }
+                    &.disabled {
+                        color: #aaa;
+                        &:hover {
+                            color: #aaa;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .jd-pagination {
+        background-color: #fff;
+        text-align: right;
+        padding: 24px;
+        .jd-pagination-sizes {
+            float: left;
+        }
+    }
+    .jd-slider .jd-slider-runway.show-input {
+        width: 100%;
+    }
+    .ant-slider {
+        width: 264px!important;
+    }
+}

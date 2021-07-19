@@ -18,7 +18,7 @@ export interface BaseProps {
     style?: React.CSSProperties;
 }
 
-export default abstract class Base<TProps = {}, TState = {}> extends React.Component<TProps & BaseProps, TState> {
+export abstract class BaseComponent<TProps = {}, TState = {}> extends React.Component<TProps & BaseProps, TState> {
     //te: te;
 
     get queryParams(): Record<string, unknown> {
