@@ -3,6 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
@@ -68,6 +69,7 @@ const commonConfig = {
     entry: {
         app: path.resolve(PROJECT_PATH, './src/index.tsx'),
     },
+    cache: true,
     // cache: {
     //     type: 'filesystem',
     //     buildDependencies: {
@@ -141,6 +143,10 @@ const commonConfig = {
             },
         ],
     },
+    // externals: {
+    //     react: 'React',
+    //     'react-dom': 'ReactDOM',
+    // },
     plugins: [
         process.env.npm_config_report && new BundleAnalyzerPlugin(),
         new webpack.DefinePlugin({
@@ -149,6 +155,49 @@ const commonConfig = {
         new HtmlWebpackPlugin({
             template: path.resolve(PROJECT_PATH, './public/index.html'),
             favicon: path.resolve(PROJECT_PATH, './public/favicon.ico'),
+        }),
+        new HtmlWebpackExternalsPlugin({
+            externals: [
+                {
+                    module: 'react',
+                    entry: 'https://unpkg.com/react@17.0.1/umd/react.production.min.js',
+                    global: 'React',
+                },
+                {
+                    module: 'react-dom',
+                    entry: 'https://unpkg.com/react-dom@17.0.1/umd/react-dom.production.min.js',
+                    global: 'ReactDOM',
+                },
+                {
+                    module: 'react-router',
+                    entry: 'https://unpkg.com/react-router@5.2.0/umd/react-router.min.js',
+                    global: 'ReactRouter',
+                },
+                // {
+                //     module: 'react-router-dom',
+                //     entry: 'https://unpkg.com/react-router-dom@5.2.0/umd/react-router-dom.min.js',
+                //     global: 'ReactRouterDOM',
+                // },
+                {
+                    module: 'antd',
+                    entry: 'https://unpkg.com/antd@4.16.7/dist/antd.min.js',
+                    global: 'antd',
+                },
+                {
+                    module: 'antd',
+                    entry: 'https://unpkg.com/antd@4.16.7/dist/antd.min.css',
+                },
+                // {
+                //     module: 'antd',
+                //     entry: 'https://unpkg.com/@ant-design/icons@4.6.2/dist/index.umd.js',
+                //     global: '@ant-design/icons',
+                // },
+                {
+                    module: 'axios',
+                    entry: 'https://unpkg.com/axios@0.21.1/dist/axios.min.js',
+                    global: 'axios',
+                },
+            ],
         }),
         new CleanWebpackPlugin(),
         new WebpackBar({

@@ -8,7 +8,7 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import { ConfigProvider } from 'antd';
 
 import '@/assets/style/index.scss';
-import '@/assets/style/overwrite-antd.less';
+// import '@/assets/style/overwrite-antd.less';
 
 ReactDOM.render(
     <ConfigProvider locale={zhCN}>
