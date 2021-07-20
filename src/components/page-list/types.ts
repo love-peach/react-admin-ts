@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import { ColumnType as TableColumn } from 'antd/lib/table/interface';
 
-import { FormComponentType } from '@/components/index';
+import { FormComponentType } from '@/components/from-components';
 
 export interface Column extends Exclude<TableColumn<any>, 'type'> {
     type?: 'index' | 'selection' | 'encrypt' | 'date' | 'dict';
@@ -14,7 +14,7 @@ export interface Column extends Exclude<TableColumn<any>, 'type'> {
 export interface IComponentProps {
     placeholder?: string;
     style?: React.CSSProperties;
-    options?: object[];
+    options?: { label: string; value: string | number }[];
     [key: string]: any;
 }
 
@@ -30,12 +30,12 @@ export interface IFilterItem {
     render?: (queryParams: any) => ReactNode;
 }
 
-export type PageInfo = {
+export type IPageInfo = {
     page: number;
     pageSize: number;
 };
 
 export interface IActionItem {
     position?: 'left' | 'right';
-    content: ReactNode | ((params: { queryParams: any; selectedRows: any[]; pageInfo: PageInfo }) => ReactNode);
+    content: ReactNode | ((params: { queryParams: any; selectedRows: any[]; pageInfo: IPageInfo }) => ReactNode);
 }

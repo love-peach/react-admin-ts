@@ -80,6 +80,6 @@ export const getValue = (data: object, src: string | (string | number)[], defaul
     return index === length ? data : defaultValue;
 };
 
-export const isEmpty = (value: any) => {
+export const isEmpty = (value: any): boolean => {
     return value === null || value === undefined || value === '';
 };

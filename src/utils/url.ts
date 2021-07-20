@@ -3,7 +3,7 @@
  * @param urlStr 字符串
  * @returns 返回参数对象 {key: any}
  */
-export function queryToJson(url?: string) {
+export function queryToJson(url?: string): Record<string, unknown> {
     let urlStr = '';
     if (typeof url === 'undefined') {
         urlStr = decodeURI(location.search); //获取url中"?"符后的字符串
@@ -12,7 +12,7 @@ export function queryToJson(url?: string) {
     }
     const params: { [key: string]: any } = {};
 
-    if (urlStr.indexOf('?') != -1) {
+    if (urlStr.indexOf('?') !== -1) {
         const str = urlStr.substr(1);
         const strs = str.split('&');
         for (let i = 0; i < strs.length; i++) {

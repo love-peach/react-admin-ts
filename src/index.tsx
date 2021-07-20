@@ -4,17 +4,15 @@ import { BrowserRouter } from 'react-router-dom';
 import { renderRoutes } from 'react-router-config';
 
 import routes from '@/routers';
+import zhCN from 'antd/lib/locale/zh_CN';
+import { ConfigProvider } from 'antd';
 
 import '@/assets/style/index.scss';
 import '@/assets/style/overwrite-antd.less';
 
-ReactDOM.render(<BrowserRouter>{renderRoutes(routes)}</BrowserRouter>, document.getElementById('root'));
-
-// import App from './pages/index';
-
-// ReactDOM.render(
-//     <React.StrictMode>
-//         <App />
-//     </React.StrictMode>,
-//     document.getElementById('root')
-// );
+ReactDOM.render(
+    <ConfigProvider locale={zhCN}>
+        <BrowserRouter>{renderRoutes(routes)}</BrowserRouter>
+    </ConfigProvider>,
+    document.getElementById('root'),
+);

@@ -10,6 +10,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 
 const { PROJECT_PATH } = require('./constant');
 const { isDevelopment, isProduction } = require('./env');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // import path from 'path';
 
@@ -141,6 +142,7 @@ const commonConfig = {
         ],
     },
     plugins: [
+        process.env.npm_config_report && new BundleAnalyzerPlugin(),
         new webpack.DefinePlugin({
             'process.env': process.env.NODE_ENV,
         }),
@@ -173,7 +175,7 @@ const commonConfig = {
                 },
             ],
         }),
-    ],
+    ].filter(Boolean),
 };
 
 module.exports = commonConfig;

@@ -1,32 +1,32 @@
 import React from 'react';
 
-import { Button, Table } from 'antd';
-
 import { BaseComponent } from '@/components/base';
-
-import PageList, { Column, IFilterItem } from '@/components/page-list';
-
-import http from '@/utils/http';
-
+import PageList, { Column, IFilterItem, IActionItem, IPageInfo } from '@/components/page-list';
+import http from '@/api/http';
 import { ITableDataItem, TDemo, TQueryParams } from './types';
 
 interface PageProps {}
 interface PageState {}
 
 export default class AgentMgList extends BaseComponent<PageProps, PageState> {
-    constructor(props: PageProps) {
-        super(props);
-    }
-
-    handleDemo = (): void => {
-        this.props.history?.push('/agent-mg/create');
-    };
-
     filters: IFilterItem[] = [
         {
             type: 'Input',
-            label: '标签关键词',
-            field: 'ratingLabel',
+            label: '标签关键词1',
+            field: 'name',
+        },
+        {
+            type: 'Select',
+            label: '标签关键词2',
+            field: 'age',
+            props: {
+                options: [
+                    {
+                        label: '1212',
+                        value: 111,
+                    },
+                ],
+            },
         },
     ];
 
@@ -37,36 +37,40 @@ export default class AgentMgList extends BaseComponent<PageProps, PageState> {
         },
         {
             title: '标题',
-            width: 130,
             key: 'title',
+        },
+    ];
+
+    actions: IActionItem[] = [
+        {
+            content: <span>添加优惠券</span>,
         },
     ];
 
     handleSearch = (
         queryParams: TQueryParams,
-        pageInfo: any,
+        pageInfo: IPageInfo,
     ): Promise<void | {
         total: number;
         tableData: ITableDataItem[];
     }> => {
-        console.log(queryParams.name);
         const params = {
-            channel: '1',
-            biz: '1',
-            pageInfo,
+            type: '3',
+            currentPage: pageInfo.page,
+            pageSize: pageInfo.pageSize,
         };
 
-        return http<TDemo>('get', '/admin/home/leftView.mvc', params)
+        return http<TDemo>('get', '/admin/head/college/page', params)
             .then(res => {
                 return {
-                    total: 0,
-                    tableData: res.data.rows || [],
+                    total: res.data?.pageInfo?.total || 0,
+                    tableData: res.data?.pageList || [],
                 };
             })
             .catch(err => {
                 return {
-                    total: 23,
-                    tableData: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
+                    total: 230,
+                    tableData: [{}, {}, {}, {}, {}, {}, {}, {}, {}, {}],
                 };
                 // this.props.history?.push('/login');
             });
@@ -74,12 +78,13 @@ export default class AgentMgList extends BaseComponent<PageProps, PageState> {
 
     render(): JSX.Element {
         return (
-            <div className="page-login">
-                <Button onClick={this.handleDemo}>代理商</Button>
-                <PageList filters={this.filters} columns={this.columns} onSearch={this.handleSearch} isHaveBackBtn>
-                    <div>fe</div>
-                </PageList>
-            </div>
+            <PageList
+                filters={this.filters}
+                columns={this.columns}
+                actions={this.actions}
+                onSearch={this.handleSearch}
+                isHaveBackBtn
+            />
         );
     }
 }

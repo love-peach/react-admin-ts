@@ -16,7 +16,12 @@ const encryptText = (text: string) => {
 
     return `${text.slice(0, left)}****${text.slice(-right)}`;
 };
-const EncryptText: FC<{ text: string }> = ({ text }) => {
+
+interface IProps {
+    text: string;
+}
+
+const EncryptText: FC<IProps> = ({ text }: IProps) => {
     const [visible, setVisible] = useState(false);
 
     return visible ? (

@@ -41,8 +41,7 @@ axios.interceptors.response.use(
         return response;
     },
     error => {
-        // eslint-disable-next-line
-        console.log('请求出错：', error);
+        msag(error);
     },
 );
 
@@ -101,7 +100,6 @@ export function patch<T = {}>(url: string, data = {}): Promise<BaseResponse<T>> 
                 resolve(response.data);
             },
             err => {
-                msag(err);
                 reject(err);
             },
         );
@@ -122,7 +120,6 @@ export function put<T = {}>(url: string, data = {}): Promise<BaseResponse<T>> {
                 resolve(response.data);
             },
             err => {
-                msag(err);
                 reject(err);
             },
         );

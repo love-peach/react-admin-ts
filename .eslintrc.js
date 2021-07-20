@@ -2,7 +2,7 @@ module.exports = {
     root: true,
     parser: '@typescript-eslint/parser',
     extends: ['plugin:react/recommended', 'plugin:@typescript-eslint/recommended'],
-    plugins: ['@typescript-eslint'],
+    plugins: ['react', '@typescript-eslint'],
     settings: {
         //自动发现React的版本，从而进行规范react代码
         react: {
@@ -37,9 +37,10 @@ module.exports = {
         '@typescript-eslint/no-empty-interface': ['off'],
         '@typescript-eslint/ban-types': ['off'],
         '@typescript-eslint/no-var-requires': ['off'],
+        '@typescript-eslint/no-explicit-any': ['off'],
         // React相关校验规则
         'react/jsx-indent': [2, 4],
         'react/jsx-no-undef': [2, { allowGlobals: true }],
-        '@typescript-eslint/no-explicit-any': ['off'],
+        // 'react/prop-types': 0,
     },
 };

@@ -1,5 +1,5 @@
 export interface TDemo {
-    rows: ITableDataItem[];
+    pageList: ITableDataItem[];
     [key: string]: any;
 }
 

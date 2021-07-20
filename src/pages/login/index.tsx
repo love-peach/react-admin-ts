@@ -8,15 +8,7 @@ export default class Login extends React.Component<PageProps, PageState> {
         super(props);
     }
 
-    handleDemo = () => {
-        console.log(this, 'this');
-    };
-
     render(): JSX.Element {
-        return (
-            <div className="page-login" onClick={this.handleDemo}>
-                login
-            </div>
-        );
+        return <div className="page-login">login</div>;
     }
 }

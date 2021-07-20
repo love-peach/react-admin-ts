@@ -1,30 +1,20 @@
 import './index.scss';
 
 import React, { Component, Fragment } from 'react';
-import { formComponents as components } from '@/components/index';
-
 import { withRouter } from 'react-router-dom';
-
 import { TableProps } from 'antd/lib/table/Table';
 import { RowSelectionType } from 'antd/lib/table/interface';
 import { PaginationConfig } from 'antd/lib/pagination';
 import { ColSize } from 'antd/lib/col';
-
+import classnames from 'classnames';
 import { Form, Row, Col, Button, Table, Spin, Pagination } from 'antd';
+import { formComponents as components } from '@/components/from-components';
+import { Panel } from '@/components';
+import { setValue, getValue, isEmpty } from './utils';
+import { enhanceTableColumn } from './utils';
+import { Column, IActionItem, IComponentProps, IFilterItem, IPageInfo } from './types';
 
 const FormItem = Form.Item;
-
-import { setValue, getValue, isEmpty } from './utils';
-
-import { BaseComponent } from '../base';
-
-import classnames from 'classnames';
-
-import { enhanceTableColumn } from './utils';
-
-import { Column, IActionItem, IComponentProps, IFilterItem, PageInfo } from './types';
-
-import { EmptyView } from '@/components/empty-view';
 
 interface IProps {
     labelCol?: ColSize;
@@ -40,14 +30,14 @@ interface IProps {
     isResetRefresh?: boolean; //重置后是否刷新列表
     onSearch: (
         queryParams: Record<string, unknown>,
-        pageInfo: PageInfo,
+        pageInfo: IPageInfo,
     ) => Promise<{ tableData: Record<string, unknown>[]; total: number } | undefined | void> | undefined | void;
     onExport?: (queryParams: Record<string, unknown>) => void;
 }
 
 interface IState {
     queryParams: Record<string, unknown>;
-    pageInfo: PageInfo;
+    pageInfo: IPageInfo;
     tableData: Record<string, unknown>[];
     total: number;
     loading: boolean;
@@ -141,6 +131,7 @@ export class PageList extends Component<IProps, IState> {
     private handleFilterValueChange = (filter: IFilterItem, value: any, originValule?: any) => {
         const { field, onChange } = filter;
         let { queryParams } = this.state;
+
         setValue(queryParams as any, field, value);
         if (onChange) {
             queryParams = onChange(queryParams, originValule);
@@ -186,7 +177,7 @@ export class PageList extends Component<IProps, IState> {
     };
 
     // 分页 pagesize 改变事件
-    private handleSizeChange = (pageSize: number) => {
+    private handleSizeChange = (current: number, pageSize: number) => {
         const { pageInfo } = this.state;
         pageInfo.page = 1;
         pageInfo.pageSize = pageSize;
@@ -218,33 +209,40 @@ export class PageList extends Component<IProps, IState> {
                 {/* 操作按钮区域 */}
                 {this.renderActionBar(this.props, this.state)}
                 {/* 列表区域 */}
-                <div className="table-pagination">
+                <Panel>
                     <Table
                         className={!tableData.length ? 'empty-table' : ''}
-                        {...(tableProps || {})}
+                        bordered
+                        loading={loading}
+                        dataSource={tableData}
+                        columns={enhanceTableColumn(columns)}
+                        pagination={false}
+                        rowKey="id"
                         rowSelection={{
                             type: selectionType,
                             onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
                                 this.handleSelectChange(selectedRows);
                             },
                         }}
-                        dataSource={tableData}
-                        columns={enhanceTableColumn(columns)}
-                        loading={loading}
+                        {...(tableProps || {})}
                     />
                     {!!total && (
                         <Pagination
-                            className="jd-pagination-custom"
+                            className="list-pagination"
                             // layout="sizes, total, prev,pager, next"
-                            pageSizeOptions={['10', '20', '30', '50']}
-                            {...(paginationProps || {})}
                             current={pageInfo.page}
+                            pageSize={pageInfo.pageSize}
+                            defaultPageSize={pageInfo.pageSize}
                             total={total}
+                            showTotal={total => `共 ${total} 条`}
+                            showSizeChanger
+                            pageSizeOptions={['10', '20', '30', '50']}
                             onChange={this.handleCurrentPageChange}
                             onShowSizeChange={this.handleSizeChange}
-                            pageSize={pageInfo.pageSize}></Pagination>
+                            {...(paginationProps || {})}
+                        />
                     )}
-                </div>
+                </Panel>
             </div>
         );
     }
@@ -332,34 +330,34 @@ export class PageList extends Component<IProps, IState> {
         const normalFilters = this.props.filters?.filter(_ => !_.alone) || [];
 
         return (
-            <div className="condition">
+            <Panel className="condition">
                 <Form layout="inline" labelAlign="right" labelCol={labelCol}>
                     {aloneFilters.map((filter, index) => (
                         <Row key={index}>
                             <Col>{this.renderFilterItem(filter)}</Col>
                         </Row>
                     ))}
-                    <Row>
-                        <Col>
-                            {normalFilters.map((filter, key) => this.renderFilterItem(filter))}
-                            <FormItem>
-                                <Button type="primary" onClick={this.handleSearch}>
-                                    查询
+
+                    {normalFilters.map(filter => this.renderFilterItem(filter))}
+
+                    <FormItem>
+                        <div className="condition-btn-wrap">
+                            <Button type="primary" onClick={this.handleSearch}>
+                                查询
+                            </Button>
+                            <Button onClick={this.handleReset}>重置</Button>
+                            {onExport && (
+                                <Button type="primary" onClick={(): void => onExport(queryParams)}>
+                                    导出
                                 </Button>
-                                <Button onClick={this.handleReset}>重置</Button>
-                                {onExport && (
-                                    <Button type="primary" onClick={(): void => onExport(queryParams)}>
-                                        导出
-                                    </Button>
-                                )}
-                                {/* eslint-disable-next-line */}
-                                {/* @ts-ignore */}
-                                {isHaveBackBtn && <Button onClick={() => this.props.history?.goBack()}>返回</Button>}
-                            </FormItem>
-                        </Col>
-                    </Row>
+                            )}
+                            {/* eslint-disable-next-line */}
+                            {/* @ts-ignore */}
+                            {isHaveBackBtn && <Button onClick={() => this.props.history?.goBack()}>返回</Button>}
+                        </div>
+                    </FormItem>
                 </Form>
-            </div>
+            </Panel>
         );
     }
 }

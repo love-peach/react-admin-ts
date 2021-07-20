@@ -34,7 +34,7 @@ const NullableColumn = (options: Column) => {
         render: (row: any, column: any, index: any) => {
             const text = getText(options, row, column, index);
 
-            return text == null ? '--' : text;
+            return text === null ? '--' : text;
         },
     };
 };
@@ -67,7 +67,7 @@ const DictColumn = (options: Column) => {
     };
 };
 
-export const enhanceTableColumn = (columns?: Column[]) => {
+export const enhanceTableColumn = (columns?: Column[]): any => {
     return columns?.map(column => {
         if (!column.type) {
             return NullableColumn(column);
