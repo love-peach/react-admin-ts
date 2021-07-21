@@ -5,14 +5,6 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common');
 const { PROJECT_PATH, SERVER_HOST, SERVER_PORT } = require('./constant');
 
-// import path from 'path';
-// import webpack from 'webpack';
-
-// import { merge } from 'webpack-merge';
-
-// import common from './webpack.common.js';
-// import { PROJECT_PATH, SERVER_HOST, SERVER_PORT } from './constant.js';
-
 const devConfig = merge(common, {
     mode: 'development',
     devtool: 'cheap-module-source-map',

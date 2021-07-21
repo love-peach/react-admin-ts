@@ -1,8 +1,6 @@
 import axios, { AxiosError, Method } from 'axios';
 
-import { isDevelopment } from '../../scripts/env';
-
-import config from '@/config/constants';
+import config from '@/config';
 
 export interface BaseResponse<T> {
     code: number | string;

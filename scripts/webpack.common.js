@@ -10,25 +10,15 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const { PROJECT_PATH } = require('./constant');
-const { isDevelopment, isProduction } = require('./env');
+const { isProduction } = require('./env');
+
+// const isProduction = process.env.NODE_ENV === 'production';
+
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
-// import path from 'path';
-
-// import webpack from 'webpack';
-// import WebpackBar from 'webpackbar';
-// import HtmlWebpackPlugin from 'html-webpack-plugin';
-// import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-// import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-// import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
-// import CopyPlugin from 'copy-webpack-plugin';
-
-// import { PROJECT_PATH } from './constant.js';
-// import { isDevelopment, isProduction } from './env.js';
 
 const getCssLoaders = () => {
     const cssLoaders = [
-        isDevelopment && 'style-loader',
+        !isProduction && 'style-loader',
         isProduction && MiniCssExtractPlugin.loader,
         {
             loader: 'css-loader',
@@ -36,7 +26,7 @@ const getCssLoaders = () => {
                 // modules: {
                 //     localIdentName: '[local]--[hash:base64:5]',
                 // },
-                sourceMap: isDevelopment,
+                sourceMap: !isProduction,
             },
         },
     ].filter(Boolean);
@@ -69,13 +59,12 @@ const commonConfig = {
     entry: {
         app: path.resolve(PROJECT_PATH, './src/index.tsx'),
     },
-    cache: true,
-    // cache: {
-    //     type: 'filesystem',
-    //     buildDependencies: {
-    //         config: [__filename],
-    //     },
-    // },
+    cache: {
+        type: 'filesystem',
+        buildDependencies: {
+            config: [__filename],
+        },
+    },
     resolve: {
         extensions: ['.tsx', '.ts', '.js', '.json'],
         alias: {
@@ -95,6 +84,7 @@ const commonConfig = {
             {
                 test: /\.css$/,
                 use: [...getCssLoaders()],
+                exclude: /node_modules/,
             },
             {
                 test: /\.less$/,
@@ -103,7 +93,7 @@ const commonConfig = {
                     {
                         loader: 'less-loader',
                         options: {
-                            sourceMap: isDevelopment,
+                            sourceMap: !isProduction,
                             lessOptions: {
                                 // 如果使用less-loader@5，请移除 lessOptions 这一级直接配置选项。
                                 // modifyVars: getThemeVariables({
@@ -115,6 +105,7 @@ const commonConfig = {
                         },
                     },
                 ],
+                exclude: /node_modules/,
             },
             {
                 test: /\.scss$/,
@@ -123,10 +114,11 @@ const commonConfig = {
                     {
                         loader: 'sass-loader',
                         options: {
-                            sourceMap: isDevelopment,
+                            sourceMap: !isProduction,
                         },
                     },
                 ],
+                exclude: /node_modules/,
             },
             {
                 test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
@@ -136,21 +128,20 @@ const commonConfig = {
                         maxSize: 4 * 1024,
                     },
                 },
+                exclude: /node_modules/,
             },
             {
                 test: /\.(eot|svg|ttf|woff|woff2?)$/,
                 type: 'asset/resource',
+                exclude: /node_modules/,
             },
         ],
     },
-    // externals: {
-    //     react: 'React',
-    //     'react-dom': 'ReactDOM',
-    // },
     plugins: [
-        process.env.npm_config_report && new BundleAnalyzerPlugin(),
+        process.env.NPM_CONFIG_REPORT && new BundleAnalyzerPlugin(),
         new webpack.DefinePlugin({
-            'process.env': process.env.NODE_ENV,
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+            'process.env.REACT_APP_ENV': JSON.stringify(process.env.REACT_APP_ENV),
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(PROJECT_PATH, './public/index.html'),
