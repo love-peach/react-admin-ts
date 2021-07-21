@@ -7,7 +7,7 @@ import { RowSelectionType } from 'antd/lib/table/interface';
 import { PaginationConfig } from 'antd/lib/pagination';
 import { ColSize } from 'antd/lib/col';
 import classnames from 'classnames';
-import { Form, Row, Col, Button, Table, Spin, Pagination } from 'antd';
+import { Form, Row, Col, Button, Table, Space, Pagination } from 'antd';
 import { formComponents as components } from '@/components/from-components';
 import { Panel } from '@/components';
 import { setValue, getValue, isEmpty } from './utils';
@@ -53,10 +53,12 @@ const getDefaultPageInfo = (props: IProps) => {
     return { page: 1, pageSize };
 };
 
+export * from './types';
+
 // eslint-disable-next-line
 // @ts-ignore
 @withRouter
-export class PageList extends Component<IProps, IState> {
+export default class PageList extends Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
@@ -341,7 +343,7 @@ export class PageList extends Component<IProps, IState> {
                     {normalFilters.map(filter => this.renderFilterItem(filter))}
 
                     <FormItem>
-                        <div className="condition-btn-wrap">
+                        <Space>
                             <Button type="primary" onClick={this.handleSearch}>
                                 查询
                             </Button>
@@ -354,7 +356,7 @@ export class PageList extends Component<IProps, IState> {
                             {/* eslint-disable-next-line */}
                             {/* @ts-ignore */}
                             {isHaveBackBtn && <Button onClick={() => this.props.history?.goBack()}>返回</Button>}
-                        </div>
+                        </Space>
                     </FormItem>
                 </Form>
             </Panel>

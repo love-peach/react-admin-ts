@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 import { FormComponentType } from '@/components/from-components';
 
+import { FormItemProps } from 'antd';
+
 export interface IComponentProps {
     placeholder?: string;
     style?: React.CSSProperties;
@@ -8,17 +10,11 @@ export interface IComponentProps {
     [key: string]: any;
 }
 
-export interface IFormFiled {
+export interface ISchemaItem extends FormItemProps {
     type: FormComponentType;
-    field: string;
+    name: string;
+    props?: IComponentProps;
     render?: () => ReactNode;
     renderBefore?: () => ReactNode;
     renderAfter?: () => ReactNode;
-    rules?: any;
-    labelWidth?: number | string;
-    label?: string;
-    labelDesc?: string;
-    labelIcon?: ReactNode;
-    required?: boolean;
-    props?: IComponentProps;
 }
