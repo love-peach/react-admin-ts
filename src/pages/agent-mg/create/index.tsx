@@ -1,5 +1,7 @@
 import React from 'react';
 
+// import PageForm from '@/components/page-from';
+
 interface PageProps {}
 interface PageState {}
 
@@ -9,6 +11,6 @@ export default class AgentMgCreate extends React.Component<PageProps, PageState>
     }
 
     render(): JSX.Element {
-        return <div>代理商创建</div>;
+        return <div>{/* <PageForm></PageForm> */}</div>;
     }
 }
