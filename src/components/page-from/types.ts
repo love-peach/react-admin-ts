@@ -17,4 +17,5 @@ export interface ISchemaItem extends FormItemProps {
     render?: () => ReactNode;
     renderBefore?: () => ReactNode;
     renderAfter?: () => ReactNode;
+    // child?: ISchemaItem[];
 }

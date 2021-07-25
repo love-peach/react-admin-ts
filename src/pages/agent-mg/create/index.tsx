@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Button } from 'antd';
+import { Button, Input, Form } from 'antd';
 
 import PageForm, { ISchemaItem } from '@/components/page-from/';
 
@@ -13,7 +13,7 @@ export default class AgentMgCreate extends React.Component<PageProps, PageState>
     }
 
     fromInitialValues = {
-        name: '11111',
+        name: '',
     };
 
     schema: ISchemaItem[] = [
@@ -21,23 +21,65 @@ export default class AgentMgCreate extends React.Component<PageProps, PageState>
             type: 'Input',
             name: 'name',
             label: '名称',
+            rules: [{ required: true, message: '名称必填' }],
+        },
+        {
+            type: 'Input',
+            name: 'name1',
+            label: '名称',
+            rules: [{ required: true, message: '名称必填' }],
+        },
+        {
+            type: 'Input',
+            name: 'name2',
+            label: '名称',
+            rules: [{ required: true, message: '名称必填' }],
+        },
+        {
+            type: 'Input',
+            name: 'name3',
+            label: '名称',
+            rules: [{ required: true, message: '名称必填' }],
+        },
+        {
+            type: 'Input',
+            name: 'name4',
+            label: '名称',
+            rules: [{ required: true, message: '名称必填' }],
+        },
+        {
+            type: 'Input',
+            name: 'address',
+            label: '地址',
+            rules: [{ required: true, message: '名称必填' }],
         },
         {
             type: 'Input',
             name: 'age',
             label: '年龄',
-            renderAfter: () => {
+            rules: [{ required: true, message: '年龄必填' }],
+            renderBefore: () => {
                 return <div>12</div>;
+            },
+            render: () => {
+                return <Input />;
+            },
+            renderAfter: () => {
+                return (
+                    <Form.Item
+                        noStyle
+                        label="Password"
+                        name="demo"
+                        rules={[{ required: true, message: 'Please input your password!' }]}>
+                        <Input />
+                    </Form.Item>
+                );
             },
         },
     ];
 
-    demo = (val: any, val2: any) => {
-        console.log(val, val2);
-    };
-
-    demo2 = (val: any, val2: any) => {
-        console.log(val, val2, '000');
+    handleOnValuesChange = (currentValue: any, formValues: any) => {
+        console.log(currentValue, formValues);
     };
 
     handleCancel = () => {
@@ -48,15 +90,26 @@ export default class AgentMgCreate extends React.Component<PageProps, PageState>
         console.log(val);
     };
 
+    onFinish = (values: any) => {
+        console.log('Success:', values);
+    };
+
+    onFinishFailed = (errorInfo: any) => {
+        console.log('Failed:', errorInfo);
+    };
+
     render(): JSX.Element {
         return (
             <div>
                 <div>
                     <PageForm
+                        // layout="inline"
                         schema={this.schema}
+                        // labelCol={{ span: 8 }}
                         initialValues={this.fromInitialValues}
-                        onFieldsChange={this.demo}
-                        onValuesChange={this.demo2}>
+                        onValuesChange={this.handleOnValuesChange}
+                        onFinish={this.onFinish}
+                        onFinishFailed={this.onFinishFailed}>
                         <Button onClick={this.handleCancel}>取消</Button>
                         <Button type="primary" onClick={this.handleConfirm}>
                             确认

@@ -82,9 +82,13 @@ export default class PageForm extends React.Component<IProps, IState> {
         } = this.props;
 
         return (
-            <Panel>
-                <Form ref={this.formRef} {...restFormProps}>
+            <Panel className="comp-form-page">
+                <Form name="basic" ref={this.formRef} {...restFormProps}>
                     {schema?.map(this.renderFormItem)}
+
+                    <Form.Item label=" " colon={false}>
+                        {isShowBottom && <div>{this.renderBottom()}</div>}
+                    </Form.Item>
                 </Form>
             </Panel>
         );
@@ -93,19 +97,6 @@ export default class PageForm extends React.Component<IProps, IState> {
         //     {isShowBottom && <div className="comp-form-page__bottom">{this.renderBottom()}</div>}
         // </div>
     }
-
-    // renderForm(): JSX.Element {
-    //     const { rules, schema, labelPosition, labelSuffix, labelWidth, layout = 'horizontal' } = this.props;
-    //     return (
-    //         <Form
-    //             ref={this.formRef}
-    //             layout={layout}
-    //             // model={formData}
-    //             {...{ labelPosition, labelSuffix, labelWidth, rules }}>
-    //             {schema?.map(this.renderFormItem)}
-    //         </Form>
-    //     );
-    // }
 
     renderFormItem = (schemaItem: ISchemaItem): JSX.Element | null => {
         const { label, name, type, render, renderBefore, renderAfter, props, rules } = schemaItem;
@@ -117,18 +108,12 @@ export default class PageForm extends React.Component<IProps, IState> {
         }
 
         return (
-            <Form.Item label={label} key={name}>
-                {render ? (
-                    <Form.Item>{render()}</Form.Item>
-                ) : (
-                    <Space>
-                        {renderBefore?.()}
-                        <Form.Item noStyle name={name} rules={rules}>
-                            <Component {...(props || {})} />
-                        </Form.Item>
-                        {renderAfter?.()}
-                    </Space>
-                )}
+            <Form.Item label={label} name={name} key={name} rules={rules}>
+                <Space>
+                    {renderBefore?.()}
+                    {render ? render() : <Component {...(props || {})} />}
+                    {renderAfter?.()}
+                </Space>
             </Form.Item>
         );
     };
@@ -140,12 +125,17 @@ export default class PageForm extends React.Component<IProps, IState> {
         }
         const { cancelButtonText = '取消', confirmButtonText = '确定' } = this.props;
         return (
-            <>
+            <Space>
                 <Button onClick={this.handleCancel}>{cancelButtonText}</Button>
-                <Button type="primary" loading={loading} onClick={this.handleConfirm}>
+
+                <Button type="primary" htmlType="submit" loading={loading} onClick={this.handleConfirm}>
                     {confirmButtonText}
                 </Button>
-            </>
+
+                {/* <Button type="primary" loading={loading} onClick={this.handleConfirm}>
+                    {confirmButtonText}
+                </Button> */}
+            </Space>
         );
     }
 }
